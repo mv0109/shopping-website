@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEasy - Premium Online Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Floating particles background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 2.5s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 1.5s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 3.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10%, 90% { opacity: 1; }
+            50% { transform: translateY(-100px) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            color: #4ecdc4;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 80px);
+            font-weight: 900;
+            margin-bottom: 24px;
+            color: white;
+            text-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 20px 48px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 16px 48px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 0;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 80px;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 48px 32px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px) rotateX(5deg);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 120px 0;
+        }
+
+        .products h2 {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 80px;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .product-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover::after {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-16px) scale(1.02);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover .product-image::before {
+            opacity: 1;
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .product-info {
+            padding: 32px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .product-info p {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            color: white;
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .features-grid,
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .features h2,
+            .products h2 {
+                font-size: 36px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #ff5252, #26a69a);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">ShopEasy</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>Shop Smarter, Live Better</h1>
+                <p>Discover premium products with an unmatched shopping experience</p>
+                <button class="cta-button">Start Shopping</button>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Why Choose ShopEasy?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🚚</span>
+                        <h3>Fast Delivery</h3>
+                        <p>Lightning-fast delivery with real-time tracking and premium packaging for your peace of mind.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🔒</span>
+                        <h3>Secure Payment</h3>
+                        <p>Bank-level security with multiple payment options and fraud protection for every transaction.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">⭐</span>
+                        <h3>Premium Quality</h3>
+                        <p>Curated selection of premium products with rigorous quality checks and customer satisfaction guarantee.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="products" class="products">
+            <div class="container">
+                <h2>Featured Products</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">📱</div>
+                        <div class="product-info">
+                            <h3>Premium Smartphone</h3>
+                            <p>Latest technology with cutting-edge features and elegant design</p>
+                            <div class="product-price">$899</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">💻</div>
+                        <div class="product-info">
+                            <h3>Ultra Laptop</h3>
+                            <p>High-performance laptop for professionals and creators</p>
+                            <div class="product-price">$1,299</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🎧</div>
+                        <div class="product-info">
+                            <h3>Wireless Headphones</h3>
+                            <p>Crystal-clear audio with noise cancellation technology</p>
+                            <div class="product-price">$299</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <p>&copy; 2024 ShopEasy. Premium shopping experience redefined.</p>
+        </div>
+    </footer>
+</body>
+</html>
